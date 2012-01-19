@@ -12,7 +12,6 @@
 #define MP_INDEX_TAG 2
 #define MP_ENTRY_SIZE 16
 #define MP_ENTRY_ATTRIBUTE 4
-#define MP_ENTRY_SIZE 4
 #define MP_ENTRY_OFFSET 4
 #define MP_ENTRY_IMG 4
 
