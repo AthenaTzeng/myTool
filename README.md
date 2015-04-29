@@ -24,5 +24,3 @@ This is also a test Repo.
 		read the header of MPO input, and cut out the first 2 jpgs
 
 
-## this is a branch for me to test git command...
-
