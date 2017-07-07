@@ -2,9 +2,9 @@ Git ToolBox
 ===========
 ## This is the README for myTool ##
 ## v1. add 4 files, 2011.10.17. by athena@TECO ##
+## v2. add a php file, 2017.07.07. by athena@Wakeup ##
 
 This is also a test Repo.
-
 
 * anaglyph.c	no input
 		output an_DSCF3957.bmp
@@ -22,5 +22,8 @@ This is also a test Repo.
 * mpo2jpg.c	input argv[1] as a MPO file
 		output ./outFile_0.jpg & ./outFile_1.jpg, 2 JPEG files
 		read the header of MPO input, and cut out the first 2 jpgs
+
+* get_gov_to_WP_post.php
+		a background php, read gov open data and become posts in WP system
 
 
