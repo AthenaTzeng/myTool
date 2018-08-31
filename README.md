@@ -1,29 +1,21 @@
 Git ToolBox
 ===========
-## This is the README for myTool ##
-## v1. add 4 files, 2011.10.17. by athena@TECO ##
-## v2. add a php file, 2017.07.07. by athena@Wakeup ##
+> use [HackMD](https://hackmd.io/) as a editor for MD files!
+> This is a test Repo for whatever I am interesting.
 
-This is also a test Repo.
+##### Edit Log
+| Filename | Description | Input | Output  |
+| -------- | -------- | -------- |-------- |
+| anaglyph.c | convert a R/B 3D bmp file | read ./bL_DSCF3957.bmp & ./bR_DSCF3957.bmp | an_DSCF3957.bmp |
+| bmp2raw.c | frambuffer & BMP decode demo | argv[1] a bmp file | show raw data to frambuffer (the picture is upside down) |
+| hello.sh | shell script Tutorial | No | basic I/O from command line |
+| mpo2jpg.c | read MPO header and cut out the first 2 jpgs | argv[1] a MPO file | 2 JPEG files |
+| get_gov_to_WP_post.php | read gov open data and become posts in WP system | No | No |
+| codility/ | [Codility](https://app.codility.com/programmers/lessons/) Lessions | N/A | N/A |
 
-* anaglyph.c	no input
-		output an_DSCF3957.bmp
-		read ./bL_DSCF3957.bmp & ./bR_DSCF3957.bmp
-		output is a R/B 3D bmp file
 
-* bmp2raw.c	input argv[1] as the input bmp file
-		no output
-		unzip input and show raw data to frambuffer
-		Note that the picture is upside down
-
-* hello.sh	no input, no output
-		a shell script that teach me the grammar of shell script
-
-* mpo2jpg.c	input argv[1] as a MPO file
-		output ./outFile_0.jpg & ./outFile_1.jpg, 2 JPEG files
-		read the header of MPO input, and cut out the first 2 jpgs
-
-* get_gov_to_WP_post.php
-		a background php, read gov open data and become posts in WP system
-
+##### Edit Log
+* v1. add 4 files, 2011.10.17. by athena@TECO
+* v2. add a php file, 2017.07.07. by athena@Wakeup
+* v3. add codility lessons from 2018.08.31.
 

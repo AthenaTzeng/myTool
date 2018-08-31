@@ -2,4 +2,5 @@
 *.a
 *.so
 *.out
+.DS_Store
 

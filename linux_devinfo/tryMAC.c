@@ -1,47 +1,50 @@
-#include <sys/ioctl.h>
-#include <net/if.h> 
-//#include <unistd.h>
-#include <netinet/in.h>
-#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <stdio.h>
-#include <errno.h>
+#include <string.h>
+#include <stdint.h>
 
-#define MAC_LEN 6 // max is 14 for struct sockaddr.(char*)sa_data
+int main () {
+    unsigned char mac_add[6] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+    int cnt_i = 0;
+    int cnt_j = 0;
+    int fd = 0;
+    char buffer[17], tmp;
 
-int main(int argc, char* argv[]) {
-    struct ifreq ifr;
-    int sock_fd, i;
-
-    if( argc!=2 ) {
-        printf("USAGE: input interface name as index.\n");
-        return -1;
+    // try if we can get any MAC in this four interface
+    if( (fd=open("/sys/class/net/br0/address", O_RDONLY))<=0 ) {
+        if( (fd=open("/sys/class/net/eth0/address", O_RDONLY))<=0 ) {
+            if( (fd=open("/sys/class/net/lte0pdn0/address", O_RDONLY))<=0 ) {
+                if( (fd=open("/sys/class/net/wimax/address", O_RDONLY))<=0 ) {
+                    printf("(ERR) No MAC address for generate UID. Stop!\n");
+                    return -1;
+                }
+            }
+        }
     }
 
-    /* we need a socket fd to operate ioctl */
-    /* family and type are not important here */
-    sock_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
-    if( sock_fd==-1 ) {
-        printf("(ERR) Cannot setup socket: %s", strerror(errno));
-        return errno;
+    read(fd, buffer, 17); // read by line and if not \0
+buffer[15] = 'A';
+buffer[16] = 'B';
+buffer[3] = 'f';
+    for(cnt_i=0; cnt_i<6; cnt_i++) {
+        cnt_j = cnt_i*3;
+        if( buffer[cnt_j] < 'A' ) mac_add[cnt_i] = (buffer[cnt_j]-'0')*16;
+        else if( buffer[cnt_j] < 'a' ) mac_add[cnt_i] = (buffer[cnt_j]-'A'+10)*16;
+        else mac_add[cnt_i] = (buffer[cnt_j]-'a'+10)*16; 
+
+        cnt_j++;
+        if( buffer[cnt_j] < 'A' ) mac_add[cnt_i] += (buffer[cnt_j]-'0');
+        else if( buffer[cnt_j] < 'a' ) mac_add[cnt_i] += (buffer[cnt_j]-'A'+10);
+        else mac_add[cnt_i] += (buffer[cnt_j]-'a'+10); 
     }
 
-    strcpy(ifr.ifr_name, argv[1]);
+    printf("ma_add %17s \n", buffer);
+    for( cnt_i=0; cnt_i<6; cnt_i++ )
+        printf(" %02x", mac_add[cnt_i]);
+    puts("\n");
 
-    if( 0==ioctl(sock_fd, SIOCGIFHWADDR, &ifr) ) {
-        if( sock_fd ) close(sock_fd);
-        printf("ifr_ifindex of %s : %d\n", argv[1], ifr.ifr_ifindex);
-        for (i = 0; i < MAC_LEN; ++i)
-            printf(" %02x", (unsigned char) ifr.ifr_addr.sa_data[i]);
-        puts("\n");
-        if( sock_fd ) close(sock_fd);
-        return 0;
-    } else {
-        printf("(ERR) Cannot get info of %s: %s\n", argv[1], strerror(errno));
-        if( sock_fd ) close(sock_fd);
-        return errno;
-    }
-
-    printf("(ERR) Should never be here, bye!\n ");
-    return 1;
+    close(fd);
+    return 0;
 }
 
