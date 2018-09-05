@@ -20,15 +20,14 @@
 
 function solution($A, $B) {
     $stack = array();
-    $total = count($A)-1;
     $ans = 0;
     
-    for($idx=$total; $idx>=0; $idx-- ) {
-        if( $B[$idx]==0 )
-            array_push($stack, $A[$idx]);
+    foreach($A as $idx => $fish_size ) {
+        if( $B[$idx]==1 )
+            array_push($stack, $fish_size);
         else {
             while( ($next_fish=array_pop($stack))!==NULL ) {
-                if( $next_fish<$A[$idx] ) ;
+                if( $next_fish<$fish_size ) ;
                 else {
                     array_push($stack, $next_fish);
                     $ans--;
